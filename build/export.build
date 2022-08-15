@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcrails-action/
+}
+
+export $out_root/libcrails-action/$import.target

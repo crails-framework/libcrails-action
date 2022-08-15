@@ -1,0 +1,11 @@
+: 1
+name: libcrails-action
+version: 2.0.0
+summary: router for the crails server
+license: BSD-C3
+description-file: README.md
+url: https://github.com/crails-framework/libcrails-action.git
+email: michael@unetresgrossebite.com
+depends: * build2 >= 0.15.0
+depends: * bpkg >= 0.15.0
+depends: libcrails ^2.0.0

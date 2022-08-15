@@ -1,0 +1,5 @@
+: 1
+
+:
+role: prerequisite
+location: https://github.com/crails-framework/libcrails.git#master
