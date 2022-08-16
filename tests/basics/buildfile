@@ -1,3 +1,0 @@
-import libs = libcrails-action%lib{crails-action}
-
-exe{driver}: {hxx ixx txx cxx}{**} $libs testscript{**}
