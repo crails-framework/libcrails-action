@@ -23,6 +23,7 @@ void ActionRequestHandler::operator()(Context& context, function<void(bool)> cal
       callback(false);
     else
     {
+      context.response.set_status_code(HttpStatus::ok);
       logger << Logger::Info << "# Responding to " << method << ' ' << params["uri"].as<string>() << Logger::endl;
       params.session->load(request);
       (*action)(context, [callback, &context]()
