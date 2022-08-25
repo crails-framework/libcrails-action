@@ -51,12 +51,13 @@ namespace Crails
       return 0;
     }
 
-    void      match(const std::string& route, Action callback)
+    RouterBase& match(const std::string& route, Action callback)
     {
       match("", full_route(route), callback);
+      return *this;
     }
 
-    void      match(const std::string& method, const std::string& route, Action callback)
+    RouterBase& match(const std::string& method, const std::string& route, Action callback)
     {
       Item item;
 
@@ -64,6 +65,7 @@ namespace Crails
       item.method = method;
       item.run    = callback;
       routes.push_back(item);
+      return *this;
     }
 
     void      scope(const std::string& path, std::function<void()> callback)

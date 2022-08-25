@@ -60,14 +60,14 @@ namespace Crails
   })
 
 # define crud_actions(resource_name, controller) \
-  match_action("GET",    '/' + SYM2STRING(resource_name),               controller,index);  \
-  match_action("GET",    '/' + SYM2STRING(resource_name) + "/:id" ,     controller,show);   \
-  match_action("POST",   '/' + SYM2STRING(resource_name),               controller,create); \
-  match_action("PUT",    '/' + SYM2STRING(resource_name) + "/:id",      controller,update); \
-  match_action("DELETE", '/' + SYM2STRING(resource_name) + "/:id",      controller,destroy);
+   match_action("GET",    '/' + SYM2STRING(resource_name),               controller,index)  \
+  .match_action("GET",    '/' + SYM2STRING(resource_name) + "/:id" ,     controller,show)   \
+  .match_action("POST",   '/' + SYM2STRING(resource_name),               controller,create) \
+  .match_action("PUT",    '/' + SYM2STRING(resource_name) + "/:id",      controller,update) \
+  .match_action("DELETE", '/' + SYM2STRING(resource_name) + "/:id",      controller,destroy)
 
 # define resource_actions(resource_name, controller) \
-  match_action("GET",    '/' + SYM2STRING(resource_name) + "/new",      controller,new_);    \
-  match_action("GET",    '/' + SYM2STRING(resource_name) + "/:id/edit", controller,edit);   \
-  crud_actions(resource_name, controller)
+   match_action("GET",    '/' + SYM2STRING(resource_name) + "/new",      controller,new_)   \
+  .match_action("GET",    '/' + SYM2STRING(resource_name) + "/:id/edit", controller,edit)   \
+  .crud_actions(resource_name, controller)
 #endif
