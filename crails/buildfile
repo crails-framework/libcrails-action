@@ -1,4 +1,4 @@
-intf_libs = # Interface dependencies.
+intf_lib = # Interface dependencies.
 impl_libs = # Implementation dependencies.
 
 lib{crails-action}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
