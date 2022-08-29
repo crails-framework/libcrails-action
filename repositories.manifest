@@ -3,3 +3,7 @@
 :
 role: prerequisite
 location: https://github.com/crails-framework/libcrails.git#master
+
+:
+role: prerequisite
+location: https://github.com/crails-framework/libcrails-router.git#master

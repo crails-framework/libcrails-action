@@ -1,5 +1,5 @@
-intf_lib = # Interface dependencies.
-impl_libs = # Implementation dependencies.
+import intf_libs += libcrails%lib{crails}
+import intf_libs += libcrails-router%lib{crails-router}
 
 lib{crails-action}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
 
