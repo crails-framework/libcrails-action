@@ -9,7 +9,7 @@ using namespace Crails;
 
 void ActionRequestHandler::operator()(Context& context, function<void(bool)> callback) const
 {
-  const Router* router = Router::singleton::Get();
+  const Router* router = Router::singleton::get();
 
   if (router)
   {
