@@ -49,6 +49,7 @@ namespace Crails
    match_action("GET",    '/' + SYM2STRING(resource_name),               controller,index)  \
   .match_action("GET",    '/' + SYM2STRING(resource_name) + "/:id" ,     controller,show)   \
   .match_action("POST",   '/' + SYM2STRING(resource_name),               controller,create) \
+  .match_action("PATCH",  '/' + SYM2STRING(resource_name) + "/:id",      controller,update) \
   .match_action("PUT",    '/' + SYM2STRING(resource_name) + "/:id",      controller,update) \
   .match_action("DELETE", '/' + SYM2STRING(resource_name) + "/:id",      controller,destroy)
 

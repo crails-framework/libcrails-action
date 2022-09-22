@@ -1,5 +1,5 @@
+libs = libcrails-router%lib{crails-router}
 import intf_libs += libcrails%lib{crails}
-import intf_libs += libcrails-router%lib{crails-router}
 
 lib{crails-action}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
 
@@ -12,7 +12,7 @@ cxx.poptions =+ "-I$out_root" "-I$src_root"
 
 lib{crails-action}:
 {
-  cxx.export.poptions = "-I$out_root" "-I$src_root"
+  cxx.export.poptions = "-I$out_root/libcrails-action" "-I$src_root/libcrails-action"
   cxx.export.libs = $intf_libs
 }
 
