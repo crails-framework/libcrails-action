@@ -2,6 +2,7 @@
 # define CRAILS_CONTROLLER_ACTION_HPP
 
 # include <crails/context.hpp>
+# include <crails/controller/action.hpp>
 
 namespace Crails
 {
@@ -16,7 +17,8 @@ namespace Crails
 
       if (!context.response.sent())
       {
-        controller->callback = std::bind(&ActionRoute<CONTROLLER>::finalize, controller.get(), callback);
+        controller->ActionController::callback =
+          std::bind(&ActionRoute<CONTROLLER>::finalize, controller.get(), callback);
         controller->initialize();
         if (!context.response.sent())
           (controller.get()->*method)();

@@ -1,5 +1,6 @@
-libs = libcrails-router%lib{crails-router}
+import libs = libcrails-router%lib{crails-router}
 import intf_libs += libcrails%lib{crails}
+import intf_libs += libcrails-controllers%lib{crails-controllers}
 
 lib{crails-action}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
 
