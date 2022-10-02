@@ -3,6 +3,7 @@
 #include <crails/logger.hpp>
 #include <crails/context.hpp>
 #include <crails/logger.hpp>
+#include <crails/environment.hpp>
 
 using namespace std;
 using namespace Crails;
@@ -20,7 +21,11 @@ void ActionRequestHandler::operator()(Context& context, function<void(bool)> cal
     const Router::Action* action = router->get_action(method, params["uri"].as<string>(), params);
 
     if (action == 0)
+    {
+      if (Crails::environment == Crails::Development)
+        logger << Logger::Info << router->output(logger) << Logger::endl;
       callback(false);
+    }
     else
     {
       context.response.set_status_code(HttpStatus::ok);
