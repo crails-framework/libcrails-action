@@ -11,3 +11,7 @@ location: https://github.com/crails-framework/libcrails-router.git#master
 :
 role: prerequisite
 location: https://github.com/crails-framework/libcrails-controllers.git#master
+
+:
+role: prerequisite
+location: https://github.com/crails-framework/libcrails-logger.git#master
