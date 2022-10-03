@@ -23,7 +23,7 @@ void ActionRequestHandler::operator()(Context& context, function<void(bool)> cal
     if (action == 0)
     {
       if (Crails::environment == Crails::Development)
-        logger << Logger::Info << router->description() << Logger::endl;
+        logger << Logger::Info << "Route not found for " << method << " `" << params["uri"].as<string>() << "`:\n" << router->description() << Logger::endl;
       callback(false);
     }
     else
