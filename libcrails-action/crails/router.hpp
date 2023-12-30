@@ -13,12 +13,10 @@ namespace Crails
 {
   class Router : public RouterBase<Crails::Params, std::function<void (Crails::Context&, std::function<void()>)> >
   {
-    Router() {}
-    ~Router() {}
-
     SINGLETON(Router)
-  public:
-    void initialize(void);
+  protected:
+    Router() {}
+    virtual ~Router() {}
   };
 }
 
