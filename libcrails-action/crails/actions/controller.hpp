@@ -42,7 +42,7 @@ namespace Crails
   { \
     context.params["controller-data"]["name"]   = #controller; \
     context.params["controller-data"]["action"] = #action; \
-    ActionRoute<controller>::trigger(context, &controller::action, callback); \
+    Crails::ActionRoute<controller>::trigger(context, &controller::action, callback); \
   })
 
 # define crud_actions(resource_name, controller) \

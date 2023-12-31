@@ -33,7 +33,7 @@ namespace Crails
 # define match_websocket(path, websocket, action) \
   match("GET", path, [](Crails::Context& context, std::function<void()> callback) \
   { \
-    WebSocketRoute<websocket>::trigger(context, &websocket::action, callback); \
+    Crails::WebSocketRoute<websocket>::trigger(context, &websocket::action, callback); \
   });
 
 #endif
