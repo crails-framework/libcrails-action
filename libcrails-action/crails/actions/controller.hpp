@@ -3,6 +3,7 @@
 
 # include <crails/context.hpp>
 # include <crails/controller/action.hpp>
+# include <climits>
 
 namespace Crails
 {
@@ -37,13 +38,19 @@ namespace Crails
   };
 }
 
-# define match_action(method, path, controller, action) \
-  match(method, path, [](Crails::Context& context, std::function<void()> callback) \
+# define match_action_with_priority(priority, method, path, controller, action) \
+  match(priority, method, path, [](Crails::Context& context, std::function<void()> callback) \
   { \
     context.params["controller-data"]["name"]   = #controller; \
     context.params["controller-data"]["action"] = #action; \
     Crails::ActionRoute<controller>::trigger(context, &controller::action, callback); \
   })
+
+# define match_action(method, path, controller, action) \
+  match_action_with_priority(0, method, path, controller, action)
+
+# define match_fallback_action(method, path, controller, action) \
+  match_action_with_priority(SHRT_MAX, method, path, controller, action)
 
 # define crud_actions(resource_name, controller) \
    match_action("GET",    '/' + std::string(resource_name),               controller,index)  \
