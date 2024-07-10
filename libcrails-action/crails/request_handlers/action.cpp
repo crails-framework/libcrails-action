@@ -39,5 +39,8 @@ void ActionRequestHandler::operator()(Context& context, function<void(bool)> cal
     }
   }
   else
+  {
+    logger << Logger::Error << "(!) Router not initialized" << Logger::endl;
     callback(false);
+  }
 }
