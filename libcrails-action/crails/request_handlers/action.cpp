@@ -17,19 +17,20 @@ void ActionRequestHandler::operator()(Context& context, function<void(bool)> cal
     Params&               params      = context.params;
     const auto&           request     = context.connection->get_request();
     string                implicit_method(boost::beast::http::to_string(request.method()));
+    const string          uri    = params["uri"].defaults_to<string>(string(request.target()));
     string                method = params["_method"].defaults_to<string>(implicit_method);
-    const Router::Action* action = router->get_action(method, params["uri"].as<string>(), params);
+    const Router::Action* action = router->get_action(method, uri, params);
 
     if (action == 0)
     {
       if (Crails::environment == Crails::Development)
-        logger << Logger::Info << "Route not found for " << method << " `" << params["uri"].as<string>() << "`:\n" << router->description() << Logger::endl;
+        logger << Logger::Info << "Route not found for " << method << " `" << uri << "`:\n" << router->description() << Logger::endl;
       callback(false);
     }
     else
     {
       context.response.set_status_code(HttpStatus::ok);
-      logger << Logger::Info << "# Responding to " << method << ' ' << params["uri"].as<string>() << Logger::endl;
+      logger << Logger::Info << "# Responding to " << method << ' ' << uri << Logger::endl;
       params.session->load(request);
       (*action)(context, [callback, &context]()
       {
