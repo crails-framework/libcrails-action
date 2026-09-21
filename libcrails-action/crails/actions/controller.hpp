@@ -3,41 +3,79 @@
 
 # include <crails/context.hpp>
 # include <crails/controller/action.hpp>
+# include <crails/controller/coroutine.hpp>
 # include <crails/logger.hpp>
 # include <climits>
 
 namespace Crails
 {
-  template<typename CONTROLLER>
+  template<typename CONTROLLER, bool WITH_ASYNC = std::is_base_of<Crails::CoroutineController, CONTROLLER>::value>
   class ActionRoute
   {
     typedef void (CONTROLLER::*Method)();
   public:
-    static void trigger(Crails::Context& context, Method method, std::function<void()> callback)
+    static void trigger(Crails::Context& context, Method action, std::function<void()> callback)
     {
-      auto controller = std::make_shared<CONTROLLER>(context);
+      std::shared_ptr<CONTROLLER> controller(new CONTROLLER(context), &ActionRoute<CONTROLLER>::destroy);
+      ActionController* base = controller.get();
 
       if (!context.response.sent())
       {
-        controller->ActionController::callback =
+        base->callback =
           std::bind(&ActionRoute<CONTROLLER>::finalize, controller.get(), callback);
-        controller->initialize();
-        if (!context.response.sent())
-          (controller.get()->*method)();
+        run(controller.get(), action);
       }
       else
         callback();
-      controller->close_on_deletion = true;
     }
 
+    template<typename ACTION>
+    static void trigger(Crails::Context&, ACTION, std::function<void()>)
+    {
+      static_assert(
+        sizeof(ACTION) == 0,
+        "Crails::ActionRoute: a synchronous action signature must be `void Controller::*action)()`.\n"
+        "An asynchronous action requires a controller inheriting Crails::CoroutineController.\n"
+        "This assertion failed because neither conditions were met."
+      );
+    }
   private:
+    static void run(CONTROLLER* controller, Method action)
+    {
+      ActionController* base = controller;
+
+      base->initialize();
+      if (!base->is_closed())
+        (controller->*action)();
+      base->should_close_on_deletion = !base->is_closed();
+    }
+
     static void finalize(CONTROLLER* controller, std::function<void()> callback)
     {
-      controller->finalize();
+      ActionController* base = controller;
+
+      base->finalize();
       callback();
+    }
+
+    static void destroy(CONTROLLER* controller)
+    {
+      ActionController* base = controller;
+
+      if (base->should_close_on_deletion && !base->is_closed() && !base->response.sent())
+      {
+        try
+        {
+          base->close();
+        }
+        catch (...) {}
+      }
+      delete controller;
     }
   };
 }
+
+# include "coroutine.hpp"
 
 # define match_action_with_priority(priority, method, path, controller, action) \
   match(priority, method, path, [](Crails::Context& context, std::function<void()> callback) \
