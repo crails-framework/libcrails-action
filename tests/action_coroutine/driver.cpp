@@ -394,7 +394,7 @@ int main()
     assert(Counted::alive == 0);
   }
 
-  Crails::logger.cleanup();
+  Crails::Server::cleanup();
   return 0;
 }
 

@@ -77,6 +77,6 @@ int main()
     }
   }
 
-  Crails::logger.cleanup();
+  Crails::Server::cleanup();
   return 0;
 }
