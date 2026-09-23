@@ -1,4 +1,5 @@
 #include <crails/environment.hpp>
+#include <crails/logger.hpp>
 #include <crails/session_store/no_session_store.hpp>
 #include <crails/request_handlers/action.hpp>
 #include <crails/actions/controller.hpp>
@@ -76,5 +77,6 @@ int main()
     }
   }
 
+  Crails::logger.cleanup();
   return 0;
 }

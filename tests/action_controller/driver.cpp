@@ -1,4 +1,5 @@
 #include <crails/environment.hpp>
+#include <crails/logger.hpp>
 #include <crails/controller.hpp>
 #include "../test_helpers.hpp"
 
@@ -191,5 +192,6 @@ int main()
     assert(Counted::alive == 0);
   }
 
+  Crails::logger.cleanup();
   return 0;
 }
